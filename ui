@@ -1,5 +1,5 @@
 --// =========================================================================
---// NULL CLIENT // SKEET (GAMESENSE) UI LIBRARY
+--// NULL CLIENT // SKEET (GAMESENSE) UI LIBRARY [FIXED & COMPLETE]
 --// =========================================================================
 
 local NullLibrary = {
@@ -53,7 +53,8 @@ function NullLibrary:Init()
 	}
 
 	local Assets = {
-		ClickSound = "15675032796"
+		ClickSound = "15675032796",
+		DefaultEsp = "126387641136719"
 	}
 
 	local function Tween(obj, info, props)
@@ -128,6 +129,168 @@ function NullLibrary:Init()
 	ScreenGui.IgnoreGuiInset = true
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	ScreenGui.Parent = PlayerGui
+
+	-----------------------------------------------------------------
+	-- ЗАСТАВКА PLAYINTRO (ИСПРАВЛЕНА ОШИБКА NIL VALUE)
+	-----------------------------------------------------------------
+	local function PlayIntro(onFinish)
+		local Blur = Instance.new("BlurEffect")
+		Blur.Name = "NullClient_IntroBlur"
+		Blur.Size = 0
+		Blur.Parent = Lighting
+
+		local IntroCanvas = Instance.new("CanvasGroup")
+		IntroCanvas.Name = "IntroCanvas"
+		IntroCanvas.Size = UDim2.fromScale(1, 1)
+		IntroCanvas.BackgroundColor3 = Color3.fromRGB(4, 5, 4)
+		IntroCanvas.BackgroundTransparency = 1
+		IntroCanvas.GroupTransparency = 0
+		IntroCanvas.ZIndex = 500
+		IntroCanvas.Parent = ScreenGui
+
+		local font = Enum.Font.GothamBlack
+		local textSize = 58
+		local sizeN = TextService:GetTextSize("N", textSize, font, Vector2.new(1000, 1000))
+		local sizeRest = TextService:GetTextSize("ULL CLIENT", textSize, font, Vector2.new(1000, 1000))
+		local gap = 4
+		local fullWidth = sizeN.X + gap + sizeRest.X
+		local textHeight = sizeN.Y + 8
+
+		local Stage = Instance.new("Frame")
+		Stage.Size = UDim2.fromOffset(fullWidth + 100, 140)
+		Stage.AnchorPoint = Vector2.new(0.5, 0.5)
+		Stage.Position = UDim2.fromScale(0.5, 0.5)
+		Stage.BackgroundTransparency = 1
+		Stage.Parent = IntroCanvas
+
+		local StageScale = Instance.new("UIScale")
+		StageScale.Scale = 0.92
+		StageScale.Parent = Stage
+
+		local Aura = Instance.new("ImageLabel")
+		Aura.Size = UDim2.fromOffset(320, 150)
+		Aura.AnchorPoint = Vector2.new(0.5, 0.5)
+		Aura.Position = UDim2.fromScale(0.5, 0.5)
+		Aura.BackgroundTransparency = 1
+		Aura.Image = "rbxassetid://5028857084"
+		Aura.ImageColor3 = Theme.Accent
+		Aura.ImageTransparency = 1
+		Aura.ZIndex = 501
+		Aura.Parent = Stage
+
+		local WordRow = Instance.new("Frame")
+		WordRow.Size = UDim2.fromOffset(sizeN.X, textHeight)
+		WordRow.AnchorPoint = Vector2.new(0.5, 0.5)
+		WordRow.Position = UDim2.fromScale(0.5, 0.5)
+		WordRow.BackgroundTransparency = 1
+		WordRow.ZIndex = 502
+		WordRow.Parent = Stage
+
+		local LetterNShadow = Instance.new("TextLabel")
+		LetterNShadow.Size = UDim2.fromOffset(sizeN.X, textHeight)
+		LetterNShadow.Position = UDim2.fromOffset(2, 102)
+		LetterNShadow.BackgroundTransparency = 1
+		LetterNShadow.Font = font
+		LetterNShadow.Text = "N"
+		LetterNShadow.TextColor3 = Color3.fromRGB(0, 0, 0)
+		LetterNShadow.TextSize = textSize
+		LetterNShadow.TextTransparency = 1
+		LetterNShadow.TextXAlignment = Enum.TextXAlignment.Left
+		LetterNShadow.ZIndex = 502
+		LetterNShadow.Parent = WordRow
+
+		local LetterN = Instance.new("TextLabel")
+		LetterN.Size = UDim2.fromOffset(sizeN.X, textHeight)
+		LetterN.Position = UDim2.fromOffset(0, 100)
+		LetterN.BackgroundTransparency = 1
+		LetterN.Font = font
+		LetterN.Text = "N"
+		LetterN.TextColor3 = Theme.Accent
+		LetterN.TextSize = textSize
+		LetterN.TextTransparency = 1
+		LetterN.TextXAlignment = Enum.TextXAlignment.Left
+		LetterN.ZIndex = 504
+		LetterN.Parent = WordRow
+
+		local RestClip = Instance.new("Frame")
+		RestClip.Size = UDim2.fromOffset(0, textHeight)
+		RestClip.Position = UDim2.fromOffset(sizeN.X + gap, 0)
+		RestClip.BackgroundTransparency = 1
+		RestClip.ClipsDescendants = true
+		RestClip.ZIndex = 503
+		RestClip.Parent = WordRow
+
+		local RestLabel = Instance.new("TextLabel")
+		RestLabel.Size = UDim2.fromOffset(sizeRest.X, textHeight)
+		RestLabel.Position = UDim2.fromOffset(-30, 0)
+		RestLabel.BackgroundTransparency = 1
+		RestLabel.Font = font
+		RestLabel.Text = "ULL CLIENT"
+		RestLabel.TextColor3 = Color3.fromRGB(245, 245, 245)
+		RestLabel.TextSize = textSize
+		RestLabel.TextTransparency = 1
+		RestLabel.TextXAlignment = Enum.TextXAlignment.Left
+		RestLabel.ZIndex = 503
+		RestLabel.Parent = RestClip
+
+		local BarBg = Instance.new("Frame")
+		BarBg.Size = UDim2.fromOffset(0, 2)
+		BarBg.AnchorPoint = Vector2.new(0.5, 0.5)
+		BarBg.Position = UDim2.new(0.5, 0, 0.5, 36)
+		BarBg.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		BarBg.BorderSizePixel = 0
+		BarBg.ZIndex = 504
+		BarBg.Parent = Stage
+
+		local BarGrad = Instance.new("UIGradient")
+		BarGrad.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.0, Color3.fromRGB(89, 177, 227)),
+			ColorSequenceKeypoint.new(0.5, Color3.fromRGB(201, 85, 196)),
+			ColorSequenceKeypoint.new(1.0, Color3.fromRGB(159, 202, 43))
+		})
+		BarGrad.Parent = BarBg
+
+		task.spawn(function()
+			Tween(Blur, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = 16 })
+			Tween(IntroCanvas, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 0.25 })
+			Tween(StageScale, TweenInfo.new(0.55, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 })
+			Tween(Aura, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { ImageTransparency = 0.78 })
+
+			Tween(LetterN, TweenInfo.new(0.55, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+				Position = UDim2.fromOffset(0, 0),
+				TextTransparency = 0
+			})
+			Tween(LetterNShadow, TweenInfo.new(0.55, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+				Position = UDim2.fromOffset(2, 2),
+				TextTransparency = 0.45
+			})
+
+			task.wait(0.62)
+
+			local expandInfo = TweenInfo.new(0.6, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			Tween(WordRow, expandInfo, { Size = UDim2.fromOffset(fullWidth, textHeight) })
+			Tween(RestClip, expandInfo, { Size = UDim2.fromOffset(sizeRest.X, textHeight) })
+			Tween(RestLabel, expandInfo, { Position = UDim2.fromOffset(0, 0), TextTransparency = 0 })
+			Tween(BarBg, expandInfo, { Size = UDim2.fromOffset(fullWidth, 2) })
+			Tween(Aura, expandInfo, { Size = UDim2.fromOffset(fullWidth + 120, 160), ImageTransparency = 0.84 })
+
+			task.wait(1.05)
+
+			local exitInfo = TweenInfo.new(0.55, Enum.EasingStyle.Quint, Enum.EasingDirection.In)
+			Tween(Blur, exitInfo, { Size = 0 })
+			Tween(StageScale, exitInfo, { Scale = 0.46 })
+			Tween(Stage, exitInfo, { Position = UDim2.new(0.5, 0, 0.72, 0) })
+			local fadeOut = Tween(IntroCanvas, exitInfo, {
+				GroupTransparency = 1,
+				BackgroundTransparency = 1
+			})
+			fadeOut.Completed:Wait()
+
+			Blur:Destroy()
+			IntroCanvas:Destroy()
+			if onFinish then onFinish() end
+		end)
+	end
 
 	-- Уведомления
 	local NotifyHolder = Instance.new("Frame")
@@ -684,7 +847,7 @@ function NullLibrary:Init()
 	PagesViewport.Parent = Interior
 
 	local PopupLayer = Instance.new("Frame")
-	PopupLayer.Size = UDim2.new(1, 1)
+	PopupLayer.Size = UDim2.fromScale(1, 1)
 	PopupLayer.BackgroundTransparency = 1
 	PopupLayer.ZIndex = 80
 	PopupLayer.Parent = Interior
@@ -973,7 +1136,7 @@ function NullLibrary:Init()
 
 		local RightColumn = Instance.new("Frame")
 		RightColumn.Size = UDim2.new(0.5, -26, 1, -40)
-		RightColumn.Position = UDim2.fromOffset(0.5, 8, 0, 20)
+		RightColumn.Position = UDim2.new(0.5, 8, 0, 20)
 		RightColumn.BackgroundTransparency = 1
 		RightColumn.Parent = Page
 
@@ -982,7 +1145,7 @@ function NullLibrary:Init()
 		RightLayout.Padding = UDim.new(0, 16)
 		RightLayout.Parent = RightColumn
 
-		local TabObject = { Glow = IconGlow, Icon = Icon, Page = Page, LeftColumn = LeftColumn, RightColumn = RightColumn }
+		local TabObject = { Glow = IconGlow, Icon = Icon, Page = Page, LeftColumn = LeftColumn, RightColumn = RightColumn, Index = index }
 		table.insert(Tabs, TabObject)
 
 		function TabObject:CreateGroupbox(title, side, heightScale, heightOffset)
@@ -1378,7 +1541,7 @@ function NullLibrary:Init()
 				SelectedText.Parent = BoxBg
 
 				local Arrow = Instance.new("TextLabel")
-				Arrow.Size = UDim2.new(16, 20)
+				Arrow.Size = UDim2.fromOffset(16, 20)
 				Arrow.Position = UDim2.new(1, -18, 0, 0)
 				Arrow.BackgroundTransparency = 1
 				Arrow.Font = Enum.Font.Code
@@ -1515,6 +1678,428 @@ function NullLibrary:Init()
 			end
 
 			return GroupAPI
+		end
+
+		-- Встроенный генератор ESP Preview для 2-й вкладки
+		function TabObject:CreateEspPreview(previewAssetId)
+			previewAssetId = previewAssetId or Assets.DefaultEsp
+			local PreviewGroup = TabObject:CreateGroupbox("ESP Preview", "Right", 1, 0)
+			PreviewGroup.Container.Visible = false
+
+			local PreviewStage = Instance.new("CanvasGroup")
+			PreviewStage.Size = UDim2.new(1, -24, 1, -28)
+			PreviewStage.Position = UDim2.fromOffset(12, 16)
+			PreviewStage.BackgroundColor3 = Color3.fromRGB(11, 12, 11)
+			PreviewStage.BorderSizePixel = 0
+			PreviewStage.ClipsDescendants = true
+			PreviewStage.Parent = PreviewGroup.Inner
+
+			CreateInnerBorder(PreviewStage, Theme.GroupBorder, 8)
+
+			local GridHint = Instance.new("TextLabel")
+			GridHint.Size = UDim2.new(1, -16, 0, 16)
+			GridHint.Position = UDim2.fromOffset(8, 6)
+			GridHint.BackgroundTransparency = 1
+			GridHint.Font = Enum.Font.Code
+			GridHint.Text = "PREVIEW // LIVE RENDER"
+			GridHint.TextColor3 = Theme.TextDim
+			GridHint.TextSize = 11
+			GridHint.TextXAlignment = Enum.TextXAlignment.Left
+			GridHint.ZIndex = 9
+			GridHint.Parent = PreviewStage
+
+			local EspCanvas = Instance.new("CanvasGroup")
+			EspCanvas.Size = UDim2.fromOffset(220, 390)
+			EspCanvas.AnchorPoint = Vector2.new(0.5, 0.5)
+			EspCanvas.Position = UDim2.new(0.5, 0, 0.5, 8)
+			EspCanvas.BackgroundTransparency = 1
+			EspCanvas.GroupTransparency = 0
+			EspCanvas.ZIndex = 10
+			EspCanvas.Parent = PreviewStage
+
+			local EspScale = Instance.new("UIScale")
+			EspScale.Scale = 1
+			EspScale.Parent = EspCanvas
+
+			local CharacterImg = Instance.new("ImageLabel")
+			CharacterImg.Size = UDim2.fromOffset(175, 310)
+			CharacterImg.AnchorPoint = Vector2.new(0.5, 0.5)
+			CharacterImg.Position = UDim2.fromScale(0.5, 0.5)
+			CharacterImg.BackgroundTransparency = 1
+			CharacterImg.ScaleType = Enum.ScaleType.Fit
+			CharacterImg.ZIndex = 11
+			CharacterImg.Parent = EspCanvas
+			ApplySmartImage(CharacterImg, previewAssetId, false)
+
+			local ChamsOverlay = Instance.new("ImageLabel")
+			ChamsOverlay.Size = CharacterImg.Size
+			ChamsOverlay.AnchorPoint = Vector2.new(0.5, 0.5)
+			ChamsOverlay.Position = UDim2.fromScale(0.5, 0.5)
+			ChamsOverlay.BackgroundTransparency = 1
+			ChamsOverlay.ImageColor3 = Theme.Accent
+			ChamsOverlay.ImageTransparency = 0.65
+			ChamsOverlay.ScaleType = Enum.ScaleType.Fit
+			ChamsOverlay.ZIndex = 12
+			ChamsOverlay.Parent = EspCanvas
+			ApplySmartImage(ChamsOverlay, previewAssetId, false)
+
+			local EspBoxFrame = Instance.new("Frame")
+			EspBoxFrame.Size = UDim2.fromOffset(186, 324)
+			EspBoxFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+			EspBoxFrame.Position = UDim2.fromScale(0.5, 0.5)
+			EspBoxFrame.BackgroundTransparency = 1
+			EspBoxFrame.ZIndex = 14
+			EspBoxFrame.Parent = EspCanvas
+
+			local EspBoxOuterStroke = Instance.new("UIStroke")
+			EspBoxOuterStroke.Color = Color3.fromRGB(0, 0, 0)
+			EspBoxOuterStroke.Thickness = 2.5
+			EspBoxOuterStroke.Parent = EspBoxFrame
+
+			local EspBoxInner = Instance.new("Frame")
+			EspBoxInner.Size = UDim2.fromScale(1, 1)
+			EspBoxInner.BackgroundTransparency = 1
+			EspBoxInner.Parent = EspBoxFrame
+
+			local EspBoxColorStroke = Instance.new("UIStroke")
+			EspBoxColorStroke.Color = Theme.Accent
+			EspBoxColorStroke.Thickness = 1
+			EspBoxColorStroke.Parent = EspBoxInner
+
+			local EspNameTag = Instance.new("TextLabel")
+			EspNameTag.Size = UDim2.new(1, 40, 0, 16)
+			EspNameTag.AnchorPoint = Vector2.new(0.5, 1)
+			EspNameTag.Position = UDim2.new(0.5, 0, 0, -5)
+			EspNameTag.BackgroundTransparency = 1
+			EspNameTag.Font = Enum.Font.GothamBold
+			EspNameTag.Text = LocalPlayer.Name
+			EspNameTag.TextColor3 = Color3.fromRGB(240, 240, 240)
+			EspNameTag.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+			EspNameTag.TextStrokeTransparency = 0.1
+			EspNameTag.TextSize = 12
+			EspNameTag.ZIndex = 15
+			EspNameTag.Parent = EspBoxFrame
+
+			local EspHealthBarBg = Instance.new("Frame")
+			EspHealthBarBg.Size = UDim2.new(0, 4, 1, 0)
+			EspHealthBarBg.Position = UDim2.fromOffset(-9, 0)
+			EspHealthBarBg.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+			EspHealthBarBg.BorderSizePixel = 0
+			EspHealthBarBg.ZIndex = 15
+			EspHealthBarBg.Parent = EspBoxFrame
+
+			local EspHealthStroke = Instance.new("UIStroke")
+			EspHealthStroke.Color = Color3.fromRGB(0, 0, 0)
+			EspHealthStroke.Thickness = 1
+			EspHealthStroke.Parent = EspHealthBarBg
+
+			local EspHealthFill = Instance.new("Frame")
+			EspHealthFill.Size = UDim2.new(1, 0, 0.92, 0)
+			EspHealthFill.AnchorPoint = Vector2.new(0, 1)
+			EspHealthFill.Position = UDim2.new(0, 0, 1, 0)
+			EspHealthFill.BackgroundColor3 = Theme.Accent
+			EspHealthFill.BorderSizePixel = 0
+			EspHealthFill.ZIndex = 16
+			EspHealthFill.Parent = EspHealthBarBg
+
+			local EspHpText = Instance.new("TextLabel")
+			EspHpText.Size = UDim2.fromOffset(36, 12)
+			EspHpText.AnchorPoint = Vector2.new(1, 0.5)
+			EspHpText.Position = UDim2.new(0, -3, 0, 0)
+			EspHpText.BackgroundTransparency = 1
+			EspHpText.Font = Enum.Font.Code
+			EspHpText.Text = "92 HP"
+			EspHpText.TextColor3 = Theme.Accent
+			EspHpText.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+			EspHpText.TextStrokeTransparency = 0
+			EspHpText.TextSize = 10
+			EspHpText.TextXAlignment = Enum.TextXAlignment.Right
+			EspHpText.ZIndex = 17
+			EspHpText.Parent = EspHealthFill
+
+			local EspBottomTag = Instance.new("TextLabel")
+			EspBottomTag.Size = UDim2.new(1, 60, 0, 26)
+			EspBottomTag.AnchorPoint = Vector2.new(0.5, 0)
+			EspBottomTag.Position = UDim2.new(0.5, 0, 1, 4)
+			EspBottomTag.BackgroundTransparency = 1
+			EspBottomTag.Font = Enum.Font.Code
+			EspBottomTag.Text = "AWP // [14M]"
+			EspBottomTag.TextColor3 = Color3.fromRGB(200, 200, 200)
+			EspBottomTag.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+			EspBottomTag.TextStrokeTransparency = 0.1
+			EspBottomTag.TextSize = 11
+			EspBottomTag.ZIndex = 15
+			EspBottomTag.Parent = EspBoxFrame
+
+			local LoaderOverlay = Instance.new("Frame")
+			LoaderOverlay.Size = UDim2.fromScale(1, 1)
+			LoaderOverlay.BackgroundColor3 = Color3.fromRGB(10, 11, 10)
+			LoaderOverlay.BackgroundTransparency = 1
+			LoaderOverlay.BorderSizePixel = 0
+			LoaderOverlay.Visible = false
+			LoaderOverlay.ZIndex = 25
+			LoaderOverlay.Parent = PreviewStage
+
+			local ScanLine = Instance.new("Frame")
+			ScanLine.Size = UDim2.new(1, 0, 0, 2)
+			ScanLine.BackgroundColor3 = Theme.Accent
+			ScanLine.BorderSizePixel = 0
+			ScanLine.ZIndex = 26
+			ScanLine.Parent = LoaderOverlay
+
+			local LoaderText = Instance.new("TextLabel")
+			LoaderText.Size = UDim2.new(1, 0, 0, 20)
+			LoaderText.AnchorPoint = Vector2.new(0.5, 0.5)
+			LoaderText.Position = UDim2.fromScale(0.5, 0.5)
+			LoaderText.BackgroundTransparency = 1
+			LoaderText.Font = Enum.Font.Code
+			LoaderText.Text = "INITIALIZING ESP PREVIEW..."
+			LoaderText.TextColor3 = Theme.Accent
+			LoaderText.TextSize = 12
+			LoaderText.ZIndex = 27
+			LoaderText.Parent = LoaderOverlay
+
+			local previewAnimId = 0
+			OnTabSwitchedCallbacks[TabObject.Index] = function()
+				previewAnimId += 1
+				local myId = previewAnimId
+				LoaderOverlay.Visible = true
+				LoaderOverlay.BackgroundTransparency = 0.08
+				LoaderText.TextTransparency = 0
+				ScanLine.Position = UDim2.fromScale(0, 0)
+				ScanLine.BackgroundTransparency = 0
+				EspCanvas.GroupTransparency = 1
+				EspScale.Scale = 0.9
+
+				Tween(ScanLine, TweenInfo.new(0.55, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), { Position = UDim2.fromScale(0, 1) })
+				task.wait(0.32)
+				if myId ~= previewAnimId then return end
+
+				Tween(EspCanvas, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), { GroupTransparency = 0 })
+				Tween(EspScale, TweenInfo.new(0.45, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 })
+				Tween(LoaderText, TweenInfo.new(0.25), { TextTransparency = 1 })
+				Tween(ScanLine, TweenInfo.new(0.25), { BackgroundTransparency = 1 })
+				local fade = Tween(LoaderOverlay, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { BackgroundTransparency = 1 })
+				fade.Completed:Wait()
+				if myId == previewAnimId then LoaderOverlay.Visible = false end
+			end
+
+			return {
+				SetMaster = function(state) Tween(EspCanvas, TweenInfo.new(0.25), { GroupTransparency = state and 0 or 0.75 }) end,
+				SetBox = function(state) EspBoxOuterStroke.Enabled = state; EspBoxColorStroke.Enabled = state end,
+				SetName = function(state) EspNameTag.Visible = state end,
+				SetHealthBar = function(state) EspHealthBarBg.Visible = state end,
+				SetHealthValue = function(val)
+					local ratio = val / 100
+					local hpColor = Color3.fromHSV(ratio * 0.28, 0.85, 0.9)
+					EspHpText.Text = tostring(val) .. " HP"
+					EspHpText.TextColor3 = hpColor
+					Tween(EspHealthFill, TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { Size = UDim2.new(1, 0, ratio, 0), BackgroundColor3 = hpColor })
+				end,
+				SetWeapon = function(state) EspBottomTag.Visible = state end,
+				SetWeaponText = function(txt) EspBottomTag.Text = txt end,
+				SetChams = function(state) ChamsOverlay.Visible = state end,
+				SetChamsOpacity = function(val) Tween(ChamsOverlay, TweenInfo.new(0.15), { ImageTransparency = 1 - (val / 100) }) end
+			}
+		end
+
+		-- Встроенный генератор вкладки Config & Settings (3-я вкладка)
+		function TabObject:BuildConfigSystem()
+			local T3_ConfigGroup = TabObject:CreateGroupbox("Configuration Presets", "Left", 1, 0)
+			local T3_MenuGroup = TabObject:CreateGroupbox("Interface & Settings", "Right", 1, 0)
+
+			local ConfigInputHolder = Instance.new("Frame")
+			ConfigInputHolder.Size = UDim2.new(1, 0, 0, 44)
+			ConfigInputHolder.BackgroundTransparency = 1
+			ConfigInputHolder.Parent = T3_ConfigGroup.Container
+
+			local ConfigInputTitle = Instance.new("TextLabel")
+			ConfigInputTitle.Size = UDim2.new(1, -22, 0, 15)
+			ConfigInputTitle.Position = UDim2.fromOffset(22, 0)
+			ConfigInputTitle.BackgroundTransparency = 1
+			ConfigInputTitle.Font = Enum.Font.Gotham
+			ConfigInputTitle.Text = "Preset Name"
+			ConfigInputTitle.TextColor3 = Theme.TextMain
+			ConfigInputTitle.TextSize = 13
+			ConfigInputTitle.TextXAlignment = Enum.TextXAlignment.Left
+			ConfigInputTitle.Parent = ConfigInputHolder
+
+			local InputOuter = Instance.new("Frame")
+			InputOuter.Size = UDim2.new(1, -26, 0, 24)
+			InputOuter.Position = UDim2.fromOffset(22, 18)
+			InputOuter.BackgroundColor3 = Theme.OuterBlack
+			InputOuter.BorderSizePixel = 0
+			InputOuter.Parent = ConfigInputHolder
+
+			local InputBg = Instance.new("Frame")
+			InputBg.Size = UDim2.new(1, -2, 1, -2)
+			InputBg.Position = UDim2.fromOffset(1, 1)
+			InputBg.BackgroundColor3 = Theme.ControlBg
+			InputBg.BorderSizePixel = 0
+			InputBg.Parent = InputOuter
+
+			local ConfigTextBox = Instance.new("TextBox")
+			ConfigTextBox.Size = UDim2.new(1, -16, 1, 0)
+			ConfigTextBox.Position = UDim2.fromOffset(8, 0)
+			ConfigTextBox.BackgroundTransparency = 1
+			ConfigTextBox.Font = Enum.Font.Gotham
+			ConfigTextBox.PlaceholderText = "Enter config name..."
+			ConfigTextBox.PlaceholderColor3 = Theme.TextDim
+			ConfigTextBox.Text = "default"
+			ConfigTextBox.TextColor3 = Theme.TextMain
+			ConfigTextBox.TextSize = 12
+			ConfigTextBox.TextXAlignment = Enum.TextXAlignment.Left
+			ConfigTextBox.ClearTextOnFocus = false
+			ConfigTextBox.Parent = InputBg
+
+			local ListBoxOuter = Instance.new("Frame")
+			ListBoxOuter.Size = UDim2.new(1, -26, 0, 195)
+			ListBoxOuter.Position = UDim2.fromOffset(22, 0)
+			ListBoxOuter.BackgroundColor3 = Theme.OuterBlack
+			ListBoxOuter.BorderSizePixel = 0
+			ListBoxOuter.Parent = T3_ConfigGroup.Container
+
+			local ListBoxBg = Instance.new("ScrollingFrame")
+			ListBoxBg.Size = UDim2.new(1, -2, 1, -2)
+			ListBoxBg.Position = UDim2.fromOffset(1, 1)
+			ListBoxBg.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
+			ListBoxBg.BorderSizePixel = 0
+			ListBoxBg.ScrollBarThickness = 3
+			ListBoxBg.ScrollBarImageColor3 = Theme.Accent
+			ListBoxBg.CanvasSize = UDim2.new(0, 0, 0, 0)
+			ListBoxBg.AutomaticCanvasSize = Enum.AutomaticSize.Y
+			ListBoxBg.Parent = ListBoxOuter
+
+			local ConfigListLayout = Instance.new("UIListLayout")
+			ConfigListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			ConfigListLayout.Parent = ListBoxBg
+
+			local SelectedConfigName = "default"
+			_G.NullClientSavedConfigs = _G.NullClientSavedConfigs or {}
+
+			local function CaptureCurrentState()
+				local snapshot = {}
+				for flagId, controller in pairs(NullLibrary.Registry) do
+					snapshot[flagId] = controller.Get()
+				end
+				return snapshot
+			end
+
+			local function ApplyConfigSnapshot(snapshot)
+				if not snapshot then return end
+				for flagId, savedData in pairs(snapshot) do
+					local controller = NullLibrary.Registry[flagId]
+					if controller then controller.Set(savedData) end
+				end
+			end
+
+			local function RefreshConfigListUI()
+				for _, child in ipairs(ListBoxBg:GetChildren()) do
+					if child:IsA("TextButton") then child:Destroy() end
+				end
+				local names = {}
+				for cfgName, _ in pairs(NullLibrary.Configs) do table.insert(names, cfgName) end
+				table.sort(names)
+
+				for idx, cfgName in ipairs(names) do
+					local isSel = (cfgName == SelectedConfigName)
+					local RowBtn = Instance.new("TextButton")
+					RowBtn.LayoutOrder = idx
+					RowBtn.Size = UDim2.new(1, 0, 0, 24)
+					RowBtn.BackgroundColor3 = Theme.ControlBg
+					RowBtn.BackgroundTransparency = isSel and 0 or 1
+					RowBtn.BorderSizePixel = 0
+					RowBtn.Font = isSel and Enum.Font.GothamBold or Enum.Font.Gotham
+					RowBtn.Text = "   " .. cfgName
+					RowBtn.TextColor3 = isSel and Theme.Accent or Theme.TextMain
+					RowBtn.TextSize = 12
+					RowBtn.TextXAlignment = Enum.TextXAlignment.Left
+					RowBtn.AutoButtonColor = false
+					RowBtn.Parent = ListBoxBg
+
+					RowBtn.MouseButton1Down:Connect(function() isInteractingWithControl = true end)
+					RowBtn.MouseButton1Click:Connect(function()
+						PlaySound(1.15)
+						SelectedConfigName = cfgName
+						ConfigTextBox.Text = cfgName
+						RefreshConfigListUI()
+					end)
+				end
+			end
+
+			NullLibrary.Configs["default"] = CaptureCurrentState()
+			NullLibrary.Configs["legit"] = CaptureCurrentState()
+			NullLibrary.Configs["rage"] = CaptureCurrentState()
+			for k, v in pairs(_G.NullClientSavedConfigs) do NullLibrary.Configs[k] = v end
+			RefreshConfigListUI()
+
+			T3_ConfigGroup:AddButton("Create / Save Config", Theme.Accent, function()
+				local name = ConfigTextBox.Text:gsub("^%s*(.-)%s*$", "%1")
+				if name == "" then NullLibrary:Notify("Config Error", "Enter a valid preset name!"); return end
+				local data = CaptureCurrentState()
+				NullLibrary.Configs[name] = data
+				_G.NullClientSavedConfigs[name] = data
+				SelectedConfigName = name
+				pcall(function() if writefile then writefile("NullClient_" .. name .. ".json", HttpService:JSONEncode(data)) end end)
+				RefreshConfigListUI()
+				NullLibrary:Notify("Configuration Saved", string.format("Preset '%s' saved.", name))
+			end)
+
+			T3_ConfigGroup:AddButton("Load Selected Config", Theme.TextMain, function()
+				local snapshot = NullLibrary.Configs[SelectedConfigName]
+				if not snapshot then NullLibrary:Notify("Load Error", "Preset not found!"); return end
+				ApplyConfigSnapshot(snapshot)
+				NullLibrary:Notify("Configuration Loaded", string.format("Loaded preset '%s'.", SelectedConfigName))
+			end)
+
+			T3_ConfigGroup:AddButton("Delete Selected Config", Theme.Danger, function()
+				if SelectedConfigName == "default" then NullLibrary:Notify("Protected", "Cannot delete 'default'."); return end
+				local removed = SelectedConfigName
+				NullLibrary.Configs[removed] = nil
+				_G.NullClientSavedConfigs[removed] = nil
+				SelectedConfigName = "default"
+				ConfigTextBox.Text = "default"
+				RefreshConfigListUI()
+				NullLibrary:Notify("Configuration Deleted", string.format("Removed '%s'.", removed))
+			end)
+
+			T3_ConfigGroup:AddButton("Reset All to Default", Theme.TextInactive, function()
+				for _, controller in pairs(NullLibrary.Registry) do controller.Reset() end
+				NullLibrary:Notify("Reset Complete", "All settings restored.")
+			end)
+
+			T3_ConfigGroup:AddButton("Export JSON to Clipboard", Theme.TextMain, function()
+				local json = HttpService:JSONEncode(CaptureCurrentState())
+				pcall(function() if setclipboard then setclipboard(json) end end)
+				NullLibrary:Notify("Config Exported", "Copied JSON (" .. tostring(#json) .. " bytes).")
+			end)
+
+			T3_MenuGroup:AddToggle("UI_ShowWatermark", "Show Watermark Bar", true, nil, function(state)
+				Tween(WatermarkCanvas, TweenInfo.new(0.28), { GroupTransparency = state and 0 or 1 })
+				task.delay(0.28, function() WatermarkCanvas.Visible = state end)
+				if state then WatermarkCanvas.Visible = true end
+			end)
+
+			T3_MenuGroup:AddToggle("UI_ShowHotkeys", "Show Hotkeys Widget", true, nil, function(state)
+				Tween(HotkeysWidget, TweenInfo.new(0.28), { GroupTransparency = state and 0 or 1 })
+				task.delay(0.28, function() HotkeysWidget.Visible = state end)
+				if state then HotkeysWidget.Visible = true end
+			end)
+
+			T3_MenuGroup:AddToggle("UI_MenuSounds", "Interface Click Sounds", true, nil, function(state)
+				NullLibrary.SoundEnabled = state
+			end)
+
+			T3_MenuGroup:AddSlider("UI_Scale", "Menu Scale", 75, 115, 100, "%", function(val)
+				userScaleFactor = val / 100
+				if isMenuOpen then
+					Tween(WindowScale, TweenInfo.new(0.18, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { Scale = userScaleFactor })
+				end
+			end)
+
+			T3_MenuGroup:AddDropdown("UI_MenuKey", "Menu Toggle Key", { "Insert", "RightShift", "Home", "End" }, 1, function(selectedKey)
+				if Enum.KeyCode[selectedKey] then NullLibrary.MenuKey = Enum.KeyCode[selectedKey] end
+			end)
 		end
 
 		return TabObject
