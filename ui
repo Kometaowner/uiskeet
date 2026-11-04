@@ -1,6 +1,5 @@
 --// =========================================================================
---// NULL CLIENT // SKEET UI LIBRARY
---// Использование: local Library = loadstring(game:HttpGet("ссылка"))()
+--// NULL CLIENT // SKEET (GAMESENSE) UI LIBRARY
 --// =========================================================================
 
 local NullLibrary = {
@@ -685,7 +684,7 @@ function NullLibrary:Init()
 	PagesViewport.Parent = Interior
 
 	local PopupLayer = Instance.new("Frame")
-	PopupLayer.Size = UDim2.fromScale(1, 1)
+	PopupLayer.Size = UDim2.new(1, 1)
 	PopupLayer.BackgroundTransparency = 1
 	PopupLayer.ZIndex = 80
 	PopupLayer.Parent = Interior
@@ -974,7 +973,7 @@ function NullLibrary:Init()
 
 		local RightColumn = Instance.new("Frame")
 		RightColumn.Size = UDim2.new(0.5, -26, 1, -40)
-		RightColumn.Position = UDim2.new(0.5, 8, 0, 20)
+		RightColumn.Position = UDim2.fromOffset(0.5, 8, 0, 20)
 		RightColumn.BackgroundTransparency = 1
 		RightColumn.Parent = Page
 
@@ -1521,7 +1520,6 @@ function NullLibrary:Init()
 		return TabObject
 	end
 
-	-- Запуск заставки и открытие интерфейса
 	PlayIntro(function()
 		Tween(WatermarkCanvas, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { GroupTransparency = 0 })
 		Tween(HotkeysWidget, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { GroupTransparency = 0 })
